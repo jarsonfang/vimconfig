@@ -10,7 +10,7 @@ set nocompatible    " be iMproved, required
 " Automatic installation
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://gitee.com/jarsonfang/vim-plug/raw/master/plug.vim
+                \ https://gitee.com/jarsonfang/vim-plug/raw/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -49,7 +49,7 @@ call plug#begin('~/.vim/bundle')
 "Plug '~/my-prototype-plugin'
 
 " if you need Vim help for vim-plug itself, register vim-plug as a plugin
-Plug 'junegunn/vim-plug'
+"Plug 'junegunn/vim-plug'
 
 "Plug 'tomasr/molokai'
 "Plug 'altercation/vim-colors-solarized'
@@ -61,8 +61,8 @@ Plug 'easymotion/vim-easymotion'
 
 " Plug 'Valloric/YouCompleteMe', { 'do': 'git submodule update --init --recursive' }
 Plug 'https://gitee.com/YouCompleteMe/YouCompleteMe.git',
-    \ { 'do': 'git submodule update --init --recursive' }
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+            \ { 'do': 'git submodule update --init --recursive' }
+"Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 
 "Plug 'dyng/ctrlsf.vim'
 "Plug 'terryma/vim-multiple-cursors'
@@ -86,8 +86,11 @@ Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'klen/python-mode', { 'for': 'python' }
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+"Plug 'klen/python-mode', { 'for': 'python' }
+Plug 'https://gitee.com/mirrors/python-mode.git',
+            \ { 'branch': 'develop', 'for': 'python' }
+"Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'https://gitee.com/mirrors/rust-vim.git', { 'for': 'rust' }
 
 "Plug 'jakub-olczyk/cpp.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -308,9 +311,9 @@ autocmd FileType markdown setlocal et sta sw=4 sts=4
 " Also don't do it when the mark is in the first line, that is the default
 " position when opening a file.
 autocmd BufReadPost *
-  \ if line("'\"") > 1 && line("'\"") <= line("$") |
-  \   exe "normal! g`\"" |
-  \ endif
+            \ if line("'\"") > 1 && line("'\"") <= line("$") |
+            \   exe "normal! g`\"" |
+            \ endif
 
 " Highlighting for Qt’s .pro and .pri files
 au BufNewFile,BufRead *.pro set filetype=make
@@ -323,7 +326,7 @@ augroup END
 " Only define it when not defined already.
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-          \ | wincmd p | diffthis
+              \ | wincmd p | diffthis
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -457,19 +460,19 @@ nmap <Leader>m :Man<Space>
 " Generated files: cscope.files, cscope.in.out, cscope.out, cscope.po.out.
 "
 if has("cscope")
-  set csprg=/usr/bin/cscope
-  set csqf=s-,c-,d-,i-,t-,e-
-  set csto=1
-  set cst
-  set nocsverb
-  " add any database in current directory
-  if filereadable("cscope.out")
-      cs add cscope.out
-  " else add database pointed to by environment
-  elseif $CSCOPE_DB != ""
-      cs add $CSCOPE_DB
-  endif
-  set csverb
+    set csprg=/usr/bin/cscope
+    set csqf=s-,c-,d-,i-,t-,e-
+    set csto=1
+    set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+        " else add database pointed to by environment
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set csverb
 endif
 
 " 0 or s: Find this C symbol
@@ -698,19 +701,19 @@ nmap <Leader>fb :CtrlPBuffer<CR>
 let g:ctrlp_regexp = 1
 let g:ctrlp_arg_map = 1
 let g:ctrlp_user_command = {
-    \ 'types': {
-        \ 1: ['.git', 'cd %s && git ls-files . -co --exclude-standard'],
-        \ 2: ['.hg', 'hg --cwd %s status -numac -I . $(hg root)'],
-    \ },
-    \ 'fallback': 'ag %s -l --nocolor --nogroup --hidden
+            \ 'types': {
+            \ 1: ['.git', 'cd %s && git ls-files . -co --exclude-standard'],
+            \ 2: ['.hg', 'hg --cwd %s status -numac -I . $(hg root)'],
+            \ },
+            \ 'fallback': 'ag %s -l --nocolor --nogroup --hidden
             \ --ignore .git
             \ --ignore out
             \ --ignore .svn
             \ --ignore .hg
             \ --ignore .DS_Store
             \ -g ""',
-    \ 'ignore': 1
-\ }
+            \ 'ignore': 1
+            \ }
 
 " Disable output, vcs, archive, temp and backup files
 set wildignore+=*.swp,*~,._*
@@ -718,10 +721,10 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
 set wildignore+=*.o,*.out,*.obj,*.pyc,*.class
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
-  \ }
+            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+            \ 'file': '\v\.(exe|so|dll)$',
+            \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+            \ }
 
 " mappings inside CtrlP's prompt, see :help ctrlp_prompt_mappings
 
@@ -758,13 +761,13 @@ nnoremap <Leader># :Grepper -tool ag -cword -noprompt<cr>
 " see https://github.com/ggreer/the_silver_searcher for more about ag
 
 let g:grepper = {
-    \ 'tools': ['git', 'ag', 'grep'],
-    \ 'next_tool': '<Leader>g',
-    \ }
+            \ 'tools': ['git', 'ag', 'grep'],
+            \ 'next_tool': '<Leader>g',
+            \ }
 
 " git grep from the root directory
 let g:grepper.git =
-  \ { 'grepprg': 'git grep -nI $* -- `git rev-parse --show-toplevel`' }
+            \ { 'grepprg': 'git grep -nI $* -- `git rev-parse --show-toplevel`' }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar
@@ -965,18 +968,18 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
 let g:airline_mode_map = {
-    \ '__' : '-',
-    \ 'n'  : 'N',
-    \ 'i'  : 'I',
-    \ 'R'  : 'R',
-    \ 'c'  : 'C',
-    \ 'v'  : 'V',
-    \ 'V'  : 'V',
-    \ '' : 'V',
-    \ 's'  : 'S',
-    \ 'S'  : 'S',
-    \ '' : 'S',
-    \ }
+            \ '__' : '-',
+            \ 'n'  : 'N',
+            \ 'i'  : 'I',
+            \ 'R'  : 'R',
+            \ 'c'  : 'C',
+            \ 'v'  : 'V',
+            \ 'V'  : 'V',
+            \ '' : 'V',
+            \ 's'  : 'S',
+            \ 'S'  : 'S',
+            \ '' : 'S',
+            \ }
 
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#ctrlp#show_adjacent_modes = 0
@@ -1031,12 +1034,12 @@ let airline#extensions#tmuxline#snapshot_file = "~/.tmux-statusline.conf"
 " #W    Current window name
 " #(shell-command)  First line of the command's output
 let g:tmuxline_preset = {
-    \'a'       : '#S',
-    \'win'     : '#I #W',
-    \'cwin'    : '#I #W',
-    \'y'       : '%H:%M',
-    \'z'       : '%Y/%m/%d %a',
-    \'options' : {'status-justify' : 'left'}}
+            \'a'       : '#S',
+            \'win'     : '#I #W',
+            \'cwin'    : '#I #W',
+            \'y'       : '%H:%M',
+            \'z'       : '%Y/%m/%d %a',
+            \'options' : {'status-justify' : 'left'}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-markdown
